@@ -1,9 +1,3 @@
-## simple Hello word
+## TicTacToe 
 
-This page is made to be used with new projects. 
-
-It includes :
-- NextJs
-- Typescript
-- EsLint
-- CLSX
+A simple TicTacToe app made with Next.JS and TypeScript
