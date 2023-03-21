@@ -1,3 +1,5 @@
+import App from "./app.tsx";
+
 export default function Home() {
-  return <div>Hello Word</div>;
+  return <App />;
 }
