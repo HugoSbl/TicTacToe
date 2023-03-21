@@ -18,7 +18,9 @@ import {
   GameProviderReturnType,
   SquareValue,
   UserNames,
+  retryButton,
 } from "./TypeTicTacToe";
+import toast, { Toaster } from "react-hot-toast";
 
 const useUserNamesForm = (): UseUserNamesFormReturnType => {
   const { setUserNames } = useGame();
@@ -30,12 +32,19 @@ const useUserNamesForm = (): UseUserNamesFormReturnType => {
     const userX = userXRef.current?.value;
     const userO = userORef.current?.value;
     if (!userX || !userO) {
+      toast.error("Please enter your usernames");
       return;
     }
     if (userX.length > 10 || userO.length > 10) {
+      toast.error("10 characters maximum");
+      return;
+    }
+    if (userX === userO) {
+      toast.error("Please enter two unique usernames");
       return;
     }
 
+    toast.success(`Player X : ${userX}\n Player O : ${userO}`);
     setUserNames({ X: userX, O: userO });
   };
 
@@ -50,13 +59,15 @@ const UserNameForm = () => {
   const { userXRef, userORef, onSubmit } = useUserNamesForm();
 
   return (
-    <form onClick={onSubmit} className="vertical-stack">
+    <form className="vertical-stack">
       <h3>Enter players names </h3>
       <label htmlFor="user1">X</label>
       <input id="user1" ref={userXRef} required minLength={2} />
       <label htmlFor="user2">O</label>
       <input id="user2" ref={userORef} required minLength={2} />
-      <button type="submit">Submit</button>
+      <button onClick={onSubmit} type="submit">
+        Submit
+      </button>
     </form>
   );
 };
@@ -99,9 +110,11 @@ const GameProvider = ({ children }: PropsWithChildren) => {
 
   const value: GameProviderReturnType = {
     squares,
+    setSquares,
     xUserName,
     oUserName,
     status,
+    winner,
     winningSquares,
     setUserNames,
     onSquareClick,
@@ -118,12 +131,32 @@ const useGame = () => {
   return context;
 };
 
+const RetryButton = ({ winner, setSquares }: retryButton) => {
+  const handleRetryButton = () => {
+    const newState = getDefaultSquares();
+    setSquares(newState);
+  };
+
+  console.log(winner);
+  if (!winner) {
+    return <></>;
+  } else {
+    return (
+      <>
+        <button onClick={() => handleRetryButton()}>try again</button>
+      </>
+    );
+  }
+};
+
 const Game = () => {
   const {
     squares,
+    setSquares,
     xUserName,
     oUserName,
     status,
+    winner,
     winningSquares,
     onSquareClick,
   } = useGame();
@@ -146,14 +179,22 @@ const Game = () => {
         winningSquares={winningSquares}
         squares={squares}
       />
+      <RetryButton winner={winner} setSquares={setSquares} />
     </div>
   );
 };
 
 export default function TicTacToeApp() {
   return (
-    // 🦁 Wrap notre composant avec le context
     <GameProvider>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          error: { duration: 2000 },
+          success: { duration: 3000 },
+        }}
+      />
+
       <h2>TicTacToe</h2>
       <Game />
     </GameProvider>

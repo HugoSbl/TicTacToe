@@ -11,9 +11,11 @@ export type UseUserNamesFormReturnType = {
 
 export type GameProviderReturnType = {
   squares: SquareValue[];
+  setSquares: () => void;
   xUserName: string | null;
   oUserName: string | null;
   status: string;
+  winner: string | null;
   winningSquares?: number[];
   setUserNames: (userNames: UserNames) => void;
   onSquareClick: (index: number) => void;
@@ -30,4 +32,8 @@ export type NonNullableUserNames = DeepNonNullable<UserNames>;
 
 export type DeepNonNullable<T> = {
   [P in keyof T]: NonNullable<T[P]>;
+};
+export type retryButton = {
+  winner?: string | null;
+  setSquares: (newState: string) => void;
 };

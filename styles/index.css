@@ -108,6 +108,7 @@ input {
   font-size: 1rem;
   border: 1px solid transparent;
   max-width: 100%;
+  text-align: center;
 }
 
 input:hover {
