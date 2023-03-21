@@ -105,3 +105,10 @@ a {
     color-scheme: dark;
   }
 }
+
+#TicTacToeApp {
+  border: 5px black solid;
+  background-color: white;
+}
+
+

@@ -1,4 +1,4 @@
-import { NonNullableUserNames } from './helpers';
+import { NonNullableUserNames } from "../TypeTicTacToe";
 
 type GameInfoProps = {
   status: string;

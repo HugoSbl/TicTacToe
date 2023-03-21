@@ -1,6 +1,5 @@
-import { useRef } from 'react';
-import { NonNullableUserNames } from './helpers';
-
+import { useRef } from "react";
+import { NonNullableUserNames } from "../TypeTicTacToe";
 type UserNameFormProps = {
   onUserNamesSubmitted: (userNames: NonNullableUserNames) => void;
 };
@@ -19,7 +18,7 @@ export const UserNameForm = ({ onUserNamesSubmitted }: UserNameFormProps) => {
     }
 
     if (userX === userO) {
-      alert('Usernames must be different');
+      alert("Usernames must be different");
       return;
     }
     onUserNamesSubmitted({ X: userX, O: userO });

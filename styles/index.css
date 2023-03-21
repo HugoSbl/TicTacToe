@@ -75,12 +75,15 @@ h1 {
 h2 {
   font-size: 2.5rem;
   line-height: 1.1;
+  margin : 0.8rem;
+  margin-top: 0.5em;
 }
 
 button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
+  margin-top: 0.5em;
   font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
@@ -206,6 +209,7 @@ hr {
 }
 
 .game-board {
+  margin : 1em auto;
   --square-size: 40px;
   display: grid;
   grid-template-columns: repeat(3, var(--square-size));
@@ -223,6 +227,17 @@ hr {
   text-align: center;
 }
 
+
+
 .square.winning-square {
   background-color: var(--primary);
+}
+
+.ticTacToeApp {
+  text-align: center;
+ background-color: white;
+  border-radius: 32px;
+  width: 250px;
+  padding : 0.5em;
+  margin-top: 1.5em;
 }

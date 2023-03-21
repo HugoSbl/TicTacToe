@@ -1,4 +1,4 @@
-export type SquareValue = "X" | "O" | null;
+import { SquareValue } from "../TypeTicTacToe";
 
 export const calculateNextValue = (squares: SquareValue[]): SquareValue => {
   const xSquaresCount = squares.filter((r) => r === "X").length;
@@ -19,18 +19,6 @@ export const calculateStatus = (
 };
 
 export const getDefaultSquares = (): SquareValue[] => new Array(9).fill(null);
-
-export type UserNames = {
-  X: string | null;
-  O: string | null;
-};
-
-export type NonNullableUserNames = DeepNonNullable<UserNames>;
-
-export type DeepNonNullable<T> = {
-  [P in keyof T]: NonNullable<T[P]>;
-};
-
 export const calculateWinner = (squares: SquareValue[]) => {
   const lines = [
     [0, 1, 2],

@@ -5,7 +5,9 @@ import React from "react";
 export default function App() {
   return (
     <div>
-      <TicTacToeApp />
+      <div className="ticTacToeApp">
+        <TicTacToeApp />
+      </div>
     </div>
   );
 }

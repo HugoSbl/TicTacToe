@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { SquareValue } from "./helpers";
+import { SquareValue } from "./TicTacToeCalculation";
 import { Square } from "./Square";
 
 type BoardProps = {

@@ -11,16 +11,14 @@ import {
   calculateNextValue,
   calculateStatus,
   getDefaultSquares,
+  calculateWinner,
+} from "./TicTacToeComponents/TicTacToeCalculation";
+import {
+  UseUserNamesFormReturnType,
+  GameProviderReturnType,
   SquareValue,
   UserNames,
-  calculateWinner,
-} from "./TicTacToeComponents/helpers";
-
-type UseUserNamesFormReturnType = {
-  userXRef: React.RefObject<HTMLInputElement>;
-  userORef: React.RefObject<HTMLInputElement>;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-};
+} from "./TypeTicTacToe";
 
 const useUserNamesForm = (): UseUserNamesFormReturnType => {
   const { setUserNames } = useGame();
@@ -32,6 +30,9 @@ const useUserNamesForm = (): UseUserNamesFormReturnType => {
     const userX = userXRef.current?.value;
     const userO = userORef.current?.value;
     if (!userX || !userO) {
+      return;
+    }
+    if (userX.length > 10 || userO.length > 10) {
       return;
     }
 
@@ -50,24 +51,14 @@ const UserNameForm = () => {
 
   return (
     <form onClick={onSubmit} className="vertical-stack">
-      <h3>Put players usernames</h3>
-      <label htmlFor="user1">User X</label>
+      <h3>Enter players names </h3>
+      <label htmlFor="user1">X</label>
       <input id="user1" ref={userXRef} required minLength={2} />
-      <label htmlFor="user2">User O</label>
+      <label htmlFor="user2">O</label>
       <input id="user2" ref={userORef} required minLength={2} />
       <button type="submit">Submit</button>
     </form>
   );
-};
-
-type GameProviderReturnType = {
-  squares: SquareValue[];
-  xUserName: string | null;
-  oUserName: string | null;
-  status: string;
-  winningSquares?: number[];
-  setUserNames: (userNames: UserNames) => void;
-  onSquareClick: (index: number) => void;
 };
 
 const GameContext = createContext<GameProviderReturnType | null>(null);
