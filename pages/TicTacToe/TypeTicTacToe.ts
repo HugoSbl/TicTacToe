@@ -2,6 +2,8 @@ import {
   SquareValue,
   UserNames,
 } from "./TicTacToeComponents/TicTacToeCalculation";
+import * as React from "react";
+import { useState } from "react";
 
 export type UseUserNamesFormReturnType = {
   userXRef: React.RefObject<HTMLInputElement>;
@@ -11,7 +13,7 @@ export type UseUserNamesFormReturnType = {
 
 export type GameProviderReturnType = {
   squares: SquareValue[];
-  setSquares: () => void;
+  setSquares: (newSquares: SquareValue[]) => void;
   xUserName: string | null;
   oUserName: string | null;
   status: string;
