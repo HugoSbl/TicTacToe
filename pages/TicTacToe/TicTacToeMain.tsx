@@ -91,17 +91,27 @@ const GameProvider = ({ children }: PropsWithChildren) => {
 
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
-  const onSquareClick = (index: number) => {
-    if (winner || squares[index] !== null) {
+  const checkIfGameFinished = (newSquares) => {
+    const isThereNullInSquares = newSquares.every((square) => square !== null);
+    if (winner) {
       setIsGameFinished(true);
+    } else if (isThereNullInSquares) {
+      setIsGameFinished(true);
+    } else return;
+  };
+
+  const onSquareClick = (index: number) => {
+    if (winner) {
       return null;
-    } else {
+    }
+    if (squares[index] === null) {
       setSquares((current) => {
         const newSquares = [...current];
         newSquares[index] = nextValue;
+        checkIfGameFinished(newSquares);
         return newSquares;
       });
-    }
+    } else return;
   };
 
   const value: GameProviderReturnType = {
@@ -136,7 +146,6 @@ const RetryButton = ({
 }: retryButton) => {
   const handleRetryButton = () => {
     const newState = getDefaultSquares();
-
     setSquares(newState);
     setIsGameFinished(false);
   };

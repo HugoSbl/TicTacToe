@@ -6,11 +6,11 @@
 
 :root {
   --bg-color: #242424;
-  --color: rgba(255, 255, 255, 0.87);
+  --color: #232323;
   --primary: #646cff;
   --primary-light: #535bf2;
-  --input-background: #1a1a1a;
-  --paper: #333333;
+  --input-background: #cacaca;
+  --paper: #aaeff3;
   --bg-code: #2c2c54;
 
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;

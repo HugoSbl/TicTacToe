@@ -34,5 +34,6 @@ export type DeepNonNullable<T> = {
 };
 export type retryButton = {
   isGameFinished: boolean;
+  setIsGameFinished?: (isGameFinished: boolean) => void;
   setSquares: (newState: SquareValue[]) => void;
 };
