@@ -1,25 +1,20 @@
-import {
-  useRef,
-  useState,
-  useContext,
-  PropsWithChildren,
-  createContext,
-} from "react";
-import { Board } from "./TicTacToeComponents/Board";
-import { GameInfo } from "./TicTacToeComponents/GameInfo";
+import type { PropsWithChildren } from "react";
+import React, { useRef, useState, useContext, createContext } from "react";
+import Board from "../../components/TicTacToeComponents/Board";
+import GameInfo from "../../components/TicTacToeComponents/GameInfo";
 import {
   calculateNextValue,
   calculateStatus,
   getDefaultSquares,
   calculateWinner,
-} from "./TicTacToeComponents/TicTacToeCalculation";
-import {
+} from "../../components/TicTacToeComponents/TicTacToeCalculation";
+import type {
   UseUserNamesFormReturnType,
   GameProviderReturnType,
   SquareValue,
   UserNames,
   retryButton,
-} from "./TypeTicTacToe";
+} from "../../type/TypeTicTacToe";
 import toast, { Toaster } from "react-hot-toast";
 
 const useUserNamesForm = (): UseUserNamesFormReturnType => {
@@ -59,15 +54,13 @@ const UserNameForm = () => {
   const { userXRef, userORef, onSubmit } = useUserNamesForm();
 
   return (
-    <form className="vertical-stack">
+    <form onSubmit={onSubmit} className="vertical-stack">
       <h3>Enter players names </h3>
       <label htmlFor="user1">X</label>
       <input id="user1" ref={userXRef} required minLength={2} />
       <label htmlFor="user2">O</label>
       <input id="user2" ref={userORef} required minLength={2} />
-      <button onClick={onSubmit} type="submit">
-        Submit
-      </button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
@@ -90,21 +83,24 @@ const GameProvider = ({ children }: PropsWithChildren) => {
   const xUserName = userNames.X;
   const oUserName = userNames.O;
 
+  const gameEnding = () => {};
+
   const status = calculateStatus(
     squares,
-    `${userNames[nextValue]}'s turn (${nextValue})`,
-    winner ? userNames[winner] : winner
+    nextValue ? `${userNames[nextValue]}'s turn (${nextValue})` : "",
+    winner ? userNames[winner] : winner,
+    isGameFinished
   );
 
   const onSquareClick = (index: number) => {
-    if (!winner) {
+    if (isGameFinished) {
+      return null;
+    } else {
       setSquares((current) => {
         const newSquares = [...current];
         newSquares[index] = nextValue;
         return newSquares;
       });
-    } else {
-      return;
     }
   };
 
@@ -116,6 +112,7 @@ const GameProvider = ({ children }: PropsWithChildren) => {
     status,
     winner,
     winningSquares,
+    isGameFinished,
     setUserNames,
     onSquareClick,
   };
@@ -137,16 +134,13 @@ const RetryButton = ({ winner, setSquares }: retryButton) => {
     setSquares(newState);
   };
 
-  console.log(winner);
-  if (!winner) {
-    return <></>;
-  } else {
-    return (
-      <>
-        <button onClick={() => handleRetryButton()}>try again</button>
-      </>
-    );
-  }
+  return winner ? (
+    <>
+      <button onClick={() => handleRetryButton()}>try again</button>
+    </>
+  ) : (
+    <></>
+  );
 };
 
 const Game = () => {

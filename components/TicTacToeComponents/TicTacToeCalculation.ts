@@ -1,4 +1,4 @@
-import { SquareValue } from "../TypeTicTacToe";
+import type { SquareValue } from "../../type/TypeTicTacToe";
 
 export const calculateNextValue = (squares: SquareValue[]): SquareValue => {
   const xSquaresCount = squares.filter((r) => r === "X").length;
@@ -9,16 +9,23 @@ export const calculateNextValue = (squares: SquareValue[]): SquareValue => {
 export const calculateStatus = (
   squares: SquareValue[],
   nextPlayer: string,
-  winner?: string | null
+  winner?: string | null,
+  isGameFinished?: boolean
 ): string => {
-  return winner
-    ? `Winner: ${winner}`
-    : squares.every(Boolean)
-    ? `Scratch: Cat's game`
-    : `Next player: ${nextPlayer}`;
+  if (winner) {
+    return `Winner: ${winner}`;
+  } else if (squares.every(Boolean)) {
+    isGameFinished = true;
+    return `Scratch: Cat's game`;
+  } else {
+    return `Next player: ${nextPlayer}`;
+  }
 };
 
-export const getDefaultSquares = (): SquareValue[] => new Array(9).fill(null);
+export const getDefaultSquares = (): SquareValue[] => {
+  return Array.from({ length: 9 }, () => null as SquareValue);
+};
+
 export const calculateWinner = (squares: SquareValue[]) => {
   const lines = [
     [0, 1, 2],
@@ -44,3 +51,5 @@ export const calculateWinner = (squares: SquareValue[]) => {
     winningSquares: [],
   };
 };
+
+export default calculateWinner;

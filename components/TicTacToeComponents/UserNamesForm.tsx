@@ -1,10 +1,10 @@
-import { useRef } from "react";
-import { NonNullableUserNames } from "../TypeTicTacToe";
+import React, { useRef } from "react";
+import type { NonNullableUserNames } from "../../type/TypeTicTacToe";
 type UserNameFormProps = {
   onUserNamesSubmitted: (userNames: NonNullableUserNames) => void;
 };
 
-export const UserNameForm = ({ onUserNamesSubmitted }: UserNameFormProps) => {
+const UserNameForm = ({ onUserNamesSubmitted }: UserNameFormProps) => {
   const userXRef = useRef<HTMLInputElement>(null);
   const userORef = useRef<HTMLInputElement>(null);
 
@@ -35,3 +35,5 @@ export const UserNameForm = ({ onUserNamesSubmitted }: UserNameFormProps) => {
     </form>
   );
 };
+
+export default UserNameForm;

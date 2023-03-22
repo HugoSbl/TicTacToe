@@ -1,11 +1,11 @@
-import { NonNullableUserNames } from "../TypeTicTacToe";
+import type { NonNullableUserNames } from "../../type/TypeTicTacToe";
 
 type GameInfoProps = {
   status: string;
   userNames: NonNullableUserNames;
 };
 
-export const GameInfo = ({ status, userNames }: GameInfoProps) => {
+const GameInfo = ({ status, userNames }: GameInfoProps) => {
   return (
     <div className="game-info">
       <div className="flex gap-3 center">
@@ -21,3 +21,5 @@ export const GameInfo = ({ status, userNames }: GameInfoProps) => {
     </div>
   );
 };
+
+export default GameInfo;

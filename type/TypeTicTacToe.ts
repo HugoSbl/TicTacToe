@@ -1,9 +1,4 @@
-import {
-  SquareValue,
-  UserNames,
-} from "./TicTacToeComponents/TicTacToeCalculation";
-import * as React from "react";
-import { useState } from "react";
+import type React from "react";
 
 export type UseUserNamesFormReturnType = {
   userXRef: React.RefObject<HTMLInputElement>;
@@ -19,11 +14,12 @@ export type GameProviderReturnType = {
   status: string;
   winner: string | null;
   winningSquares?: number[];
+  isGameFinished: boolean;
   setUserNames: (userNames: UserNames) => void;
   onSquareClick: (index: number) => void;
 };
 
-export type SquareValue = "X" | "O" | null;
+export type SquareValue = "O" | "X" | null;
 
 export type UserNames = {
   X: string | null;
@@ -37,5 +33,5 @@ export type DeepNonNullable<T> = {
 };
 export type retryButton = {
   winner?: string | null;
-  setSquares: (newState: string) => void;
+  setSquares: (newState: SquareValue[]) => void;
 };
