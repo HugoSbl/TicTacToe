@@ -14,6 +14,7 @@ export type GameProviderReturnType = {
   status: string;
   winner: string | null;
   winningSquares?: number[];
+  setIsGameFinished?: (isGameFinished: boolean) => void;
   isGameFinished: boolean;
   setUserNames: (userNames: UserNames) => void;
   onSquareClick: (index: number) => void;
@@ -32,6 +33,6 @@ export type DeepNonNullable<T> = {
   [P in keyof T]: NonNullable<T[P]>;
 };
 export type retryButton = {
-  winner?: string | null;
+  isGameFinished: boolean;
   setSquares: (newState: SquareValue[]) => void;
 };

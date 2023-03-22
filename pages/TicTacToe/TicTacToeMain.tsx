@@ -83,17 +83,17 @@ const GameProvider = ({ children }: PropsWithChildren) => {
   const xUserName = userNames.X;
   const oUserName = userNames.O;
 
-  const gameEnding = () => {};
-
   const status = calculateStatus(
     squares,
     nextValue ? `${userNames[nextValue]}'s turn (${nextValue})` : "",
-    winner ? userNames[winner] : winner,
-    isGameFinished
+    winner ? userNames[winner] : winner
   );
 
+  const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
+
   const onSquareClick = (index: number) => {
-    if (isGameFinished) {
+    if (winner || squares[index] !== null) {
+      setIsGameFinished(true);
       return null;
     } else {
       setSquares((current) => {
@@ -113,6 +113,7 @@ const GameProvider = ({ children }: PropsWithChildren) => {
     winner,
     winningSquares,
     isGameFinished,
+    setIsGameFinished,
     setUserNames,
     onSquareClick,
   };
@@ -128,13 +129,21 @@ const useGame = () => {
   return context;
 };
 
-const RetryButton = ({ winner, setSquares }: retryButton) => {
+const RetryButton = ({
+  isGameFinished,
+  setIsGameFinished,
+  setSquares,
+}: retryButton) => {
   const handleRetryButton = () => {
     const newState = getDefaultSquares();
+
     setSquares(newState);
+    setIsGameFinished(false);
   };
 
-  return winner ? (
+  console.log(isGameFinished);
+
+  return isGameFinished ? (
     <>
       <button onClick={() => handleRetryButton()}>try again</button>
     </>
@@ -150,8 +159,9 @@ const Game = () => {
     xUserName,
     oUserName,
     status,
-    winner,
     winningSquares,
+    isGameFinished,
+    setIsGameFinished,
     onSquareClick,
   } = useGame();
 
@@ -173,7 +183,11 @@ const Game = () => {
         winningSquares={winningSquares}
         squares={squares}
       />
-      <RetryButton winner={winner} setSquares={setSquares} />
+      <RetryButton
+        isGameFinished={isGameFinished}
+        setIsGameFinished={setIsGameFinished}
+        setSquares={setSquares}
+      />
     </div>
   );
 };
