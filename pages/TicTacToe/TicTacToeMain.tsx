@@ -75,6 +75,7 @@ const GameProvider = ({ children }: PropsWithChildren) => {
     X: null,
     O: null,
   });
+  const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
   const { winner, winningSquares } = calculateWinner(squares);
 
@@ -89,13 +90,12 @@ const GameProvider = ({ children }: PropsWithChildren) => {
     winner ? userNames[winner] : winner
   );
 
-  const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
-
-  const checkIfGameFinished = (newSquares) => {
+  const checkIfGameFinished = (newSquares: SquareValue[]) => {
     const isThereNullInSquares = newSquares.every((square) => square !== null);
     if (winner) {
       setIsGameFinished(true);
-    } else if (isThereNullInSquares) {
+    }
+    if (isThereNullInSquares) {
       setIsGameFinished(true);
     } else return;
   };
@@ -149,8 +149,6 @@ const RetryButton = ({
     setSquares(newState);
     setIsGameFinished(false);
   };
-
-  console.log(isGameFinished);
 
   return isGameFinished ? (
     <>
