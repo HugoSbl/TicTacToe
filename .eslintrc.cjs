@@ -120,6 +120,7 @@ module.exports = {
         },
       },
     ],
+    "import/no-unresolved": "off",
     "import/no-duplicates": "error",
     "@next/next/no-img-element": 0,
     "@next/next/no-html-link-for-pages": ["error", "app"],
@@ -143,4 +144,6 @@ module.exports = {
       },
     ],
   },
+
+
 };

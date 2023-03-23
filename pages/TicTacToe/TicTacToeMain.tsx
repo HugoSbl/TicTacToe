@@ -50,8 +50,6 @@ const useUserNamesForm = (): UseUserNamesFormReturnType => {
     setUserNames({ X: userX, O: userO });
   };
 
-  const toto = "";
-
   return {
     userXRef,
     userORef,
