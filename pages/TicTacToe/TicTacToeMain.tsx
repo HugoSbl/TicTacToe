@@ -1,6 +1,11 @@
 import type { PropsWithChildren } from "react";
-import React, { useRef, useState, useContext, createContext } from "react";
-import Board from "../../components/TicTacToeComponents/Board";
+import React, {
+  useRef,
+  useState,
+  useContext,
+  createContext,
+  useEffect,
+} from "react";
 import GameInfo from "../../components/TicTacToeComponents/GameInfo";
 import {
   calculateNextValue,
@@ -13,9 +18,11 @@ import type {
   GameProviderReturnType,
   SquareValue,
   UserNames,
-  retryButton,
 } from "../../type/TypeTicTacToe";
+
 import toast, { Toaster } from "react-hot-toast";
+import RetryButton from "~/components/InterfaceComponents/RetryButton";
+import Board from "~/components/TicTacToeComponents/Board";
 
 const useUserNamesForm = (): UseUserNamesFormReturnType => {
   const { setUserNames } = useGame();
@@ -51,7 +58,7 @@ const useUserNamesForm = (): UseUserNamesFormReturnType => {
 };
 
 const UserNameForm = () => {
-  const { userXRef, userORef, onSubmit } = useUserNamesForm();
+  const { userXRef, userORef, onSubmit } = useUserNamesForm(); // hook
 
   return (
     <form onSubmit={onSubmit} className="vertical-stack">
@@ -79,6 +86,8 @@ const GameProvider = ({ children }: PropsWithChildren) => {
 
   const { winner, winningSquares } = calculateWinner(squares);
 
+  console.log("winner", winner);
+
   const nextValue = calculateNextValue(squares);
 
   const xUserName = userNames.X;
@@ -90,14 +99,18 @@ const GameProvider = ({ children }: PropsWithChildren) => {
     winner ? userNames[winner] : winner
   );
 
-  const checkIfGameFinished = (newSquares: SquareValue[]) => {
-    const isThereNullInSquares = newSquares.every((square) => square !== null);
-    if (winner) {
-      setIsGameFinished(true);
-    }
-    if (isThereNullInSquares) {
-      setIsGameFinished(true);
-    } else return;
+  const isGameFinished2 = squares.every(Boolean);
+
+  console.log("isGameFinishedi", isGameFinished2);
+
+  useEffect(() => {
+    (winner || isGameFinished2) && setIsGameFinished(true);
+  }, [winner, isGameFinished2]);
+
+  const handleRetryButton = () => {
+    const newState = getDefaultSquares();
+    setSquares(newState);
+    setIsGameFinished(false);
   };
 
   const onSquareClick = (index: number) => {
@@ -108,7 +121,6 @@ const GameProvider = ({ children }: PropsWithChildren) => {
       setSquares((current) => {
         const newSquares = [...current];
         newSquares[index] = nextValue;
-        checkIfGameFinished(newSquares);
         return newSquares;
       });
     } else return;
@@ -124,39 +136,12 @@ const GameProvider = ({ children }: PropsWithChildren) => {
     winningSquares,
     isGameFinished,
     setIsGameFinished,
+    handleRetryButton,
     setUserNames,
     onSquareClick,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
-};
-
-const useGame = () => {
-  const context = useContext(GameContext);
-  if (context === null) {
-    throw new Error("type of GameContext is null");
-  }
-  return context;
-};
-
-const RetryButton = ({
-  isGameFinished,
-  setIsGameFinished,
-  setSquares,
-}: retryButton) => {
-  const handleRetryButton = () => {
-    const newState = getDefaultSquares();
-    setSquares(newState);
-    setIsGameFinished(false);
-  };
-
-  return isGameFinished ? (
-    <>
-      <button onClick={() => handleRetryButton()}>try again</button>
-    </>
-  ) : (
-    <></>
-  );
 };
 
 const Game = () => {
@@ -167,6 +152,7 @@ const Game = () => {
     oUserName,
     status,
     winningSquares,
+    handleRetryButton,
     isGameFinished,
     setIsGameFinished,
     onSquareClick,
@@ -192,11 +178,20 @@ const Game = () => {
       />
       <RetryButton
         isGameFinished={isGameFinished}
-        setIsGameFinished={setIsGameFinished}
+        handleRetryButton={handleRetryButton}
+        // setIsGameFinished={setIsGameFinished}
         setSquares={setSquares}
       />
     </div>
   );
+};
+
+const useGame = () => {
+  const context = useContext(GameContext);
+  if (context === null) {
+    throw new Error("type of GameContext is null");
+  }
+  return context;
 };
 
 export default function TicTacToeApp() {

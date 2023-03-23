@@ -1,4 +1,5 @@
 import type { SquareValue } from "../../type/TypeTicTacToe";
+import { checkIfGameFinished } from "../InterfaceComponents/RetryButton";
 
 export const calculateNextValue = (squares: SquareValue[]): SquareValue => {
   const xSquaresCount = squares.filter((r) => r === "X").length;
@@ -9,13 +10,11 @@ export const calculateNextValue = (squares: SquareValue[]): SquareValue => {
 export const calculateStatus = (
   squares: SquareValue[],
   nextPlayer: string,
-  winner?: string | null,
-  isGameFinished?: boolean
+  winner?: string | null
 ): string => {
   if (winner) {
     return `Winner: ${winner}`;
   } else if (squares.every(Boolean)) {
-    isGameFinished = true;
     return `Scratch: Cat's game`;
   } else {
     return `Next player: ${nextPlayer}`;
