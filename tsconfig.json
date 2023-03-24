@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "~/*": ["*"]
+      "~/*": ["./*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -25,6 +25,7 @@
       }
     ]
   },
+
   "include": [
     "**/*.ts",
     "**/*.tsx",

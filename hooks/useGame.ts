@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GameContext } from "~/pages/TicTacToe/TicTacToeMain";
+import { GameContext } from "~/context/GameProvider";
 
 const useGame = () => {
   const context = useContext(GameContext);
