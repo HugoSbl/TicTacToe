@@ -1,5 +1,4 @@
 import type { SquareValue } from "../../type/TypeTicTacToe";
-import { checkIfGameFinished } from "../InterfaceComponents/RetryButton";
 
 export const calculateNextValue = (squares: SquareValue[]): SquareValue => {
   const xSquaresCount = squares.filter((r) => r === "X").length;

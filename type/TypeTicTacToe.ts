@@ -8,13 +8,14 @@ export type UseUserNamesFormReturnType = {
 
 export type GameProviderReturnType = {
   squares: SquareValue[];
-  setSquares: (newSquares: SquareValue[]) => void;
   xUserName: string | null;
   oUserName: string | null;
   status: string;
   winner: string | null;
+  winningSquares: number[];
   setIsGameFinished?: (isGameFinished: boolean) => void;
   isGameFinished: boolean;
+  handleRetryButton: () => void;
   setUserNames: (userNames: UserNames) => void;
   onSquareClick: (index: number) => void;
 };
@@ -34,6 +35,5 @@ export type DeepNonNullable<T> = {
 
 export type retryButton = {
   isGameFinished: boolean;
-  setIsGameFinished?: (isGameFinished: boolean) => void;
-  setSquares: (newState: SquareValue[]) => void;
+  handleRetryButton: () => void;
 };
